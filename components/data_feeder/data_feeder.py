@@ -1,14 +1,15 @@
 from time import sleep
+from typing import List
 
 import pandas as pd
 
 
 class DataFeeder:
-    def __init__(self, path_to_file: str, speed_coef: float, date_col_name: str, value_col_name: str) -> None:
+    def __init__(self, path_to_file: str, speed_coef: float, date_col_name: str, value_col_names: List[str]) -> None:
         self._path_to_file = path_to_file
         self._speed_coeff = speed_coef
         self._date_col_name = date_col_name
-        self._value_col_name = value_col_name
+        self._value_col_names = value_col_names
 
 
     def start_feed_data(self):
@@ -17,7 +18,9 @@ class DataFeeder:
         data['time_diff'] = data[self._date_col_name].shift(-1) - data[self._date_col_name]
 
         for i, row in data.iterrows():
-            print(row[self._date_col_name], row[self._value_col_name])
+            # write to db
+            for value_col in self._value_col_names:
+                print(row[self._date_col_name], row[value_col])
             # write to db
             
             time_to_sleep = row['time_diff']
