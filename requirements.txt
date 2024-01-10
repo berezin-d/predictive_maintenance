@@ -1,5 +1,6 @@
 dash
 dash_bootstrap_components
+ipykernel
 matplotlib
 pandas
 scipy
